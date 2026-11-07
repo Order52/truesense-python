@@ -23,8 +23,8 @@ jobs:
       matrix:
         language: [python, c-cpp]
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v3
+      - uses: actions/checkout@v7
+      - uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.language == 'c-cpp' && 'manual' || 'none' }}
@@ -33,5 +33,5 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq "linux-headers-$(uname -r)"
           cd kernel/truesense-wmi && make KVER="$(uname -r)"
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v4
         with: { category: "/language:${{ matrix.language }}" }
